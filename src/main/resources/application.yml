@@ -1,0 +1,8 @@
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    corsEnabled: true
+spring:
+  server:
+    port: 9000
