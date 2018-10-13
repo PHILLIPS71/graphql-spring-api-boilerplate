@@ -9,15 +9,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMutation implements GraphQLMutationResolver {
 
-        @Autowired
-        private UserDao dao;
+    @Autowired
+    private UserDao dao;
 
-        public User create(String username, String email, String password) {
-            return dao.create(username, email, password);
-        }
+    public User create(String username, String email, String password) {
+        return dao.create(username, email, password);
+    }
 
-        public User delete(String id) {
-            return dao.delete(id);
-        }
+    public User delete(String id) {
+        return dao.delete(id);
+    }
 
 }
