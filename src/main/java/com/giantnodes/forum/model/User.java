@@ -3,6 +3,7 @@ package com.giantnodes.forum.model;
 import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.util.DigestUtils;
 
 @Document(collection = "users")
 public class User {
@@ -18,9 +19,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt(9));
-        this.avatar = null;
-        System.out.println("created");
-        System.out.println(authenticate("password"));
+        this.avatar = "https://gravatar.com/avatar/" + DigestUtils.md5DigestAsHex(email.getBytes()) + "?d=identicon";
     }
 
     public String getId() {
