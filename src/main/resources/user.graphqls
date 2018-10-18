@@ -4,6 +4,8 @@ type User {
     email: String!
     password: String!
     avatar: String
+    createdAt: String!
+    modifiedAt: String!
 }
 
 type Query {

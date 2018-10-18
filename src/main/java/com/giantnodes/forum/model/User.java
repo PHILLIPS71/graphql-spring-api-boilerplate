@@ -1,21 +1,32 @@
 package com.giantnodes.forum.model;
 
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.util.DigestUtils;
 
 @Document(collection = "users")
 public class User {
 
-    private final String id;
-    private final String username;
-    private final String email;
+    @Id
+    private String id;
+
+    private String username;
+    private String email;
     private String password;
     private String avatar;
 
+    @CreatedDate
+    private DateTime createdAt;
+
+    @LastModifiedDate
+    private DateTime modifiedAt;
+
     public User(String username, String email, String password) {
-        this.id = new ObjectId().toString();
         this.username = username;
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt(9));
@@ -42,15 +53,19 @@ public class User {
         this.password = password;
     }
 
-    public boolean authenticate(String attempt) {
-        return BCrypt.checkpw(attempt, getPassword());
-    }
-
     public String getAvatar() {
         return avatar;
     }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public DateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public DateTime getModifiedAt() {
+        return modifiedAt;
     }
 }
