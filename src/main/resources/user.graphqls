@@ -10,7 +10,7 @@ type User {
 
 type Query {
     users: [User]
-    get(username: String): [User]
+    get(id: String): User
 }
 
 type Mutation {

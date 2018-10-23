@@ -1,8 +1,8 @@
-package com.giantnodes.forum.resolver;
+package com.giantnodes.forum.api.user;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import com.giantnodes.forum.model.User;
-import com.giantnodes.forum.services.UserDao;
+import com.giantnodes.forum.api.user.User;
+import com.giantnodes.forum.api.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +18,10 @@ public class UserMutation implements GraphQLMutationResolver {
 
     public User delete(String id) {
         return dao.delete(id);
+    }
+
+    public User update() {
+        return null;
     }
 
 }

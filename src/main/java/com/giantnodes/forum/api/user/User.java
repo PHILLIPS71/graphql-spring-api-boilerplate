@@ -1,6 +1,5 @@
-package com.giantnodes.forum.model;
+package com.giantnodes.forum.api.user;
 
-import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.data.annotation.CreatedDate;
@@ -68,4 +67,5 @@ public class User {
     public DateTime getModifiedAt() {
         return modifiedAt;
     }
+
 }

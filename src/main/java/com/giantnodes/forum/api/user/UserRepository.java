@@ -1,6 +1,6 @@
-package com.giantnodes.forum.repository;
+package com.giantnodes.forum.api.user;
 
-import com.giantnodes.forum.model.User;
+import com.giantnodes.forum.api.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

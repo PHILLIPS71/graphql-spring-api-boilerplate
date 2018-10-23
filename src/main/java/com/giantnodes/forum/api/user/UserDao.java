@@ -1,13 +1,11 @@
-package com.giantnodes.forum.services;
+package com.giantnodes.forum.api.user;
 
-import com.giantnodes.forum.model.User;
-import com.giantnodes.forum.repository.UserRepository;
+import com.giantnodes.forum.services.graphql.exceptions.IdNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class UserDao {
@@ -30,8 +28,15 @@ public class UserDao {
     }
 
     @Transactional
-    public List<User> get(Optional<String> username) {
-        return repository.findByUsernameLike(username.get());
+    public User update(User updated) {
+        User user = repository.findById(updated.getId()).get();
+//        user.merge(updated);
+        return repository.save(user);
+    }
+
+    @Transactional
+    public User get(String id) {
+        return repository.findById(id).orElseThrow(() -> new IdNotFoundException(id));
     }
 
     @Transactional
