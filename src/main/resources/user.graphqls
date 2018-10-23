@@ -1,3 +1,14 @@
+type Query {
+    users: [User]
+    get(id: String): User
+}
+
+type Mutation {
+    create(username: String!, email: String!, password: String!): User!
+    update(input: UserInput!): User!
+    delete(id: String!): User!
+}
+
 type User {
     id: ID!
     username: String!
@@ -8,12 +19,10 @@ type User {
     modifiedAt: String!
 }
 
-type Query {
-    users: [User]
-    get(id: String): User
-}
-
-type Mutation {
-    create(username: String!, email: String!, password: String!): User!
-    delete(id: String!): User!
+input UserInput {
+    id: ID!
+    username: String
+    email: String
+    password: String
+    avatar: String
 }

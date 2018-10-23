@@ -28,9 +28,9 @@ public class UserDao {
     }
 
     @Transactional
-    public User update(User updated) {
-        User user = repository.findById(updated.getId()).get();
-//        user.merge(updated);
+    public User update(UserInput input) {
+        User user = repository.findById(input.getId()).orElseThrow(() -> new IdNotFoundException(input.getId()));
+        user.merge(input);
         return repository.save(user);
     }
 
