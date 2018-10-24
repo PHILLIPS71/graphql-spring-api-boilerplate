@@ -1,15 +1,13 @@
-package com.giantnodes.forum.api.user;
+package com.giantnodes.forum.api.user.graphql;
 
 public class UserInput {
 
-    private String id;
     private String username;
     private String email;
     private String password;
     private String avatar;
 
-    public UserInput(String id, String username, String email, String password, String avatar) {
-        this.id = id;
+    public UserInput(String username, String email, String password, String avatar) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -18,9 +16,6 @@ public class UserInput {
 
     public UserInput() {}
 
-    public String getId() {
-        return id;
-    }
 
     public String getUsername() {
         return username;
