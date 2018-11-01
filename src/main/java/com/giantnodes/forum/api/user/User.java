@@ -3,12 +3,10 @@ package com.giantnodes.forum.api.user;
 import com.giantnodes.forum.api.user.graphql.UserInput;
 import com.giantnodes.forum.utility.Mergeable;
 import org.joda.time.DateTime;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.util.DigestUtils;
 
 import java.lang.reflect.Field;
 
@@ -34,7 +32,6 @@ public class User implements Mergeable<User, UserInput> {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.seen = new DateTime();
     }
 
     public String getId() {

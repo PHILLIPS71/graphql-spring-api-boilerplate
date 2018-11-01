@@ -21,8 +21,8 @@ type User {
 }
 
 input UserInput {
-    username: String
     email: String
     password: String
     avatar: String
+    seen: String
 }

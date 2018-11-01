@@ -3,6 +3,7 @@ package com.giantnodes.forum.api.user;
 import com.giantnodes.forum.api.API;
 import com.giantnodes.forum.api.user.graphql.UserInput;
 import com.giantnodes.forum.services.graphql.exceptions.IdNotFoundException;
+import org.joda.time.DateTime;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class UserDao implements API<User, UserInput> {
     public User create(User user) {
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(9)));
         user.setAvatar("https://gravatar.com/avatar/" + DigestUtils.md5DigestAsHex(user.getEmail().getBytes()) + "?d=identicon");
+        user.setSeen(new DateTime());
         return repository.save(user);
     }
 
