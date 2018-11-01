@@ -2,13 +2,15 @@ package com.giantnodes.forum.api;
 
 import java.util.List;
 
-public interface API<S, T> {
+public interface API<T, I> {
 
-    S delete(String id);
+    T create(T object);
 
-    S update(String id, T input);
+    T delete(String id);
 
-    S get(String id);
+    T update(String id, I input);
 
-    List<S> all();
+    T get(String id);
+
+    List<T> all();
 }

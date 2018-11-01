@@ -10,11 +10,9 @@ public class UserInput {
     public UserInput(String username, String email, String password, String avatar) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.password = password;;
         this.avatar = avatar;
     }
-
-    public UserInput() {}
 
 
     public String getUsername() {
@@ -23,6 +21,10 @@ public class UserInput {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getAvatar() {

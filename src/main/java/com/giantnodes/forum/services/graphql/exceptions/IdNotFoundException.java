@@ -18,7 +18,7 @@ public class IdNotFoundException extends RuntimeException implements GraphQLErro
 
     @Override
     public String getMessage() {
-        return "Item with " + id + " could not be found!";
+        return "Document with ID " + id + " could not be found!";
     }
 
     @Override
@@ -36,5 +36,5 @@ public class IdNotFoundException extends RuntimeException implements GraphQLErro
     public ErrorType getErrorType() {
         return ErrorType.ValidationError;
     }
-
+    
 }

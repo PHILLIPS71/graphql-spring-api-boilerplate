@@ -22,6 +22,7 @@ public class User implements Mergeable<User, UserInput> {
     private String email;
     private String password;
     private String avatar;
+    private DateTime seen;
 
     @CreatedDate
     private DateTime createdAt;
@@ -32,8 +33,8 @@ public class User implements Mergeable<User, UserInput> {
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt(9));
-        this.avatar = "https://gravatar.com/avatar/" + DigestUtils.md5DigestAsHex(email.getBytes()) + "?d=identicon";
+        this.password = password;
+        this.seen = new DateTime();
     }
 
     public String getId() {
@@ -66,6 +67,14 @@ public class User implements Mergeable<User, UserInput> {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public DateTime getSeen() {
+        return seen;
+    }
+
+    public void setSeen(DateTime seen) {
+        this.seen = seen;
     }
 
     public DateTime getCreatedAt() {

@@ -15,6 +15,7 @@ type User {
     email: String!
     password: String!
     avatar: String
+    seen: String!
     createdAt: String!
     modifiedAt: String!
 }
