@@ -2,6 +2,7 @@ package com.giantnodes.forum.services.graphql;
 
 import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
+import graphql.servlet.GraphQLErrorHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ import java.util.stream.Collectors;
  * Overriding default GraphQL implementation for exceptions processing
  */
 @Component
-public class GraphQLErrorHandler implements GraphQLErrorHandler {
+public class GraphQLErrorHandling implements GraphQLErrorHandler {
+
     @Override
     public List<GraphQLError> processErrors(List<GraphQLError> errors) {
         List<GraphQLError> clientErrors = errors.stream()
