@@ -1,4 +1,4 @@
-package com.giantnodes.forum.api.user.graphql;
+package com.giantnodes.forum.api.user.graphql.input;
 
 import org.joda.time.DateTime;
 import org.mindrot.jbcrypt.BCrypt;

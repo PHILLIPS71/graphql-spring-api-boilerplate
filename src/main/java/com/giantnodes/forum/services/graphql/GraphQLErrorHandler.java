@@ -4,25 +4,33 @@ import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Overriding default GraphQL implementation for exceptions processing
+ */
 @Component
-public class GraphQLErrorHandler implements graphql.servlet.GraphQLErrorHandler {
-
+public class GraphQLErrorHandler implements GraphQLErrorHandler {
     @Override
-    public List<GraphQLError> processErrors(List<GraphQLError> list) {
-        return list.stream().map(this::getNested).collect(Collectors.toList());
+    public List<GraphQLError> processErrors(List<GraphQLError> errors) {
+        List<GraphQLError> clientErrors = errors.stream()
+                .filter(this::isClientError)
+                .collect(Collectors.toList());
+
+        List<GraphQLError> serverErrors = errors.stream()
+                .filter(e -> !isClientError(e))
+                .map(GraphQLErrorAdapter::new)
+                .collect(Collectors.toList());
+
+        List<GraphQLError> e = new ArrayList<>();
+        e.addAll(clientErrors);
+        e.addAll(serverErrors);
+        return e;
     }
 
-    private GraphQLError getNested(GraphQLError error) {
-        if (error instanceof ExceptionWhileDataFetching) {
-            ExceptionWhileDataFetching exceptionError = (ExceptionWhileDataFetching) error;
-            if (exceptionError.getException() instanceof GraphQLError) {
-                return (GraphQLError) exceptionError.getException();
-            }
-        }
-        return error;
+    protected boolean isClientError(GraphQLError error) {
+        return !(error instanceof ExceptionWhileDataFetching || error instanceof Throwable);
     }
-
 }

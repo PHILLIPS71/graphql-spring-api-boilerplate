@@ -7,6 +7,7 @@ type Mutation {
     create(username: String!, email: String!, password: String!): User!
     update(id: String, input: UserInput): User
     delete(id: String!): User!
+    login(credentials: CredentialsInput!): User
 }
 
 type User {
@@ -25,4 +26,9 @@ input UserInput {
     password: String
     avatar: String
     seen: String
+}
+
+input CredentialsInput {
+    email: String!
+    password: String!
 }

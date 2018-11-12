@@ -1,6 +1,6 @@
 package com.giantnodes.forum.api.user;
 
-import com.giantnodes.forum.api.user.graphql.UserInput;
+import com.giantnodes.forum.api.user.graphql.input.UserInput;
 import com.giantnodes.forum.utility.Mergeable;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;

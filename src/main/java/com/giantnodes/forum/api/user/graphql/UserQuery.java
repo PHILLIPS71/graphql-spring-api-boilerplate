@@ -3,6 +3,7 @@ package com.giantnodes.forum.api.user.graphql;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.giantnodes.forum.api.user.User;
 import com.giantnodes.forum.api.user.UserDao;
+import com.giantnodes.forum.services.security.Unsecured;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ public class UserQuery implements GraphQLQueryResolver {
     private UserDao dao;
 
 
+    @Unsecured
     public List<User> users() {
         return dao.all();
     }

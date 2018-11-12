@@ -1,7 +1,7 @@
 package com.giantnodes.forum.api.user;
 
 import com.giantnodes.forum.api.API;
-import com.giantnodes.forum.api.user.graphql.UserInput;
+import com.giantnodes.forum.api.user.graphql.input.UserInput;
 import com.giantnodes.forum.services.graphql.exceptions.IdNotFoundException;
 import org.joda.time.DateTime;
 import org.mindrot.jbcrypt.BCrypt;
@@ -47,6 +47,11 @@ public class UserDao implements API<User, UserInput> {
     @Transactional
     public User get(String id) {
         return repository.findById(id).orElseThrow(() -> new IdNotFoundException(id));
+    }
+
+    @Transactional
+    public User getByEmail(String email) {
+        return repository.findByEmail(email).orElseThrow(() -> new IdNotFoundException(email));
     }
 
     @Override
