@@ -1,6 +1,7 @@
 package com.giantnodes.forum.api.user.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import com.giantnodes.forum.api.user.UserAuth;
 import com.giantnodes.forum.api.user.User;
 import com.giantnodes.forum.api.user.UserDao;
 import com.giantnodes.forum.api.user.graphql.input.CredentialsInput;
@@ -39,21 +40,18 @@ public class UserMutation implements GraphQLMutationResolver {
     }
 
     @Unsecured
-    public User login(CredentialsInput input) {
+    public UserAuth login(CredentialsInput input) {
         User user = dao.getByEmail(input.getEmail());
-
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println(SecurityContextHolder.getContext());
 
         ZonedDateTime expiration = ZonedDateTime.now(ZoneOffset.UTC).plus(SecurityConstants.EXPIRATION_TIME, ChronoUnit.MILLIS);
         String token = Jwts.builder().setSubject(user.getId())
                 .setExpiration(Date.from(expiration.toInstant()))
                 .signWith(SignatureAlgorithm.HS256, SecurityConstants.SECRET)
                 .compact();
-        System.out.println(token);
-        return user;
+        return new UserAuth(user, token);
     }
 
 }
