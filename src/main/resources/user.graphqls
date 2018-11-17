@@ -1,13 +1,14 @@
 type Query {
     users: [User]
     get(id: String!): User
+    verify(token: String!): UserAuth!
 }
 
 type Mutation {
     create(username: String!, email: String!, password: String!): User!
     update(id: String, input: UserInput): User
     delete(id: String!): User!
-    login(credentials: CredentialsInput!): UserAuth!
+    login(credentials: CredentialsInput!): UserAuth
 }
 
 type User {

@@ -8,18 +8,20 @@ import com.giantnodes.forum.api.user.graphql.input.CredentialsInput;
 import com.giantnodes.forum.api.user.graphql.input.UserInput;
 import com.giantnodes.forum.services.security.SecurityConstants;
 import com.giantnodes.forum.services.security.Unsecured;
+import graphql.GraphQLException;
+import graphql.schema.DataFetchingEnvironment;
+import graphql.servlet.GraphQLContext;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
+import java.time.Instant;
+import java.util.Date;
 
 @Component
 public class UserMutation implements GraphQLMutationResolver {
@@ -35,7 +37,9 @@ public class UserMutation implements GraphQLMutationResolver {
         return dao.delete(id);
     }
 
-    public User update(String id, UserInput input) {
+    public User update(String id, UserInput input, DataFetchingEnvironment environment) {
+        GraphQLContext context = environment.getContext();
+        System.out.println("FILES " + context.getFiles());
         return dao.update(id, input);
     }
 
@@ -43,12 +47,15 @@ public class UserMutation implements GraphQLMutationResolver {
     public UserAuth login(CredentialsInput input) {
         User user = dao.getByEmail(input.getEmail());
 
+        if(!BCrypt.checkpw(input.getPassword(), user.getPassword())) {
+            throw new GraphQLException("Incorrect Email or Password");
+        }
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        ZonedDateTime expiration = ZonedDateTime.now(ZoneOffset.UTC).plus(SecurityConstants.EXPIRATION_TIME, ChronoUnit.MILLIS);
         String token = Jwts.builder().setSubject(user.getId())
-                .setExpiration(Date.from(expiration.toInstant()))
+                .setIssuedAt(Date.from(Instant.now()))
                 .signWith(SignatureAlgorithm.HS256, SecurityConstants.SECRET)
                 .compact();
         return new UserAuth(user, token);

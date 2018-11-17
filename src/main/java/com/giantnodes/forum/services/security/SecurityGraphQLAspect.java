@@ -20,7 +20,6 @@ public class SecurityGraphQLAspect {
      */
     @Before("allGraphQLResolverMethods() && isDefinedInApplication() && !isMethodAnnotatedAsUnsecured()")
     public void doSecurityCheck() {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         if (SecurityContextHolder.getContext() == null ||
                 SecurityContextHolder.getContext().getAuthentication() == null ||
                 !SecurityContextHolder.getContext().getAuthentication().isAuthenticated() ||
