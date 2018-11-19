@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
+                .antMatchers("/storage/**").permitAll()
                 .antMatchers("/graphql").permitAll()
                 .antMatchers("/graphiql").permitAll()
                 .anyRequest().authenticated()

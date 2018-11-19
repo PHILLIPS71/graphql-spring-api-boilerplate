@@ -38,6 +38,10 @@ public class UserInput {
         return avatar;
     }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public  DateTime getSeen() {
         return seen;
     }
