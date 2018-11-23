@@ -8,8 +8,8 @@ import com.giantnodes.forum.api.user.graphql.input.CredentialsInput;
 import com.giantnodes.forum.api.user.graphql.input.UserInput;
 import com.giantnodes.forum.services.security.SecurityConstants;
 import com.giantnodes.forum.services.security.Unsecured;
-import com.giantnodes.forum.utility.resources.FileUpload;
 import com.giantnodes.forum.utility.resources.ResourceDirectory;
+import com.giantnodes.forum.utility.resources.conversion.image.ImageUpload;
 import graphql.GraphQLException;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.servlet.GraphQLContext;
@@ -44,8 +44,14 @@ public class UserMutation implements GraphQLMutationResolver {
         GraphQLContext context = environment.getContext();
 
         if (!input.getAvatar().isEmpty()) {
-            FileUpload avatar = new FileUpload(environment.getContext(), ResourceDirectory.STORAGE_AVATAR, id);
-            input.setAvatar("http://localhost:8080/" + avatar.getLocation().getDirectory() + avatar.getFile().getName());
+            ImageUpload avatar = new ImageUpload(environment.getContext(), ResourceDirectory.STORAGE_AVATAR, id);
+
+            if(avatar.getPart().getSize() > 1_000_000) {
+                throw new GraphQLException("File size is too big 1mb limit");
+            }
+
+            avatar.store();
+            input.setAvatar("http://localhost:8080/" + avatar.getResource().getDirectory() + avatar.getFile().getName());
         }
 
         return dao.update(id, input);
