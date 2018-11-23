@@ -9,7 +9,7 @@ import com.giantnodes.forum.api.user.graphql.input.UserInput;
 import com.giantnodes.forum.services.security.SecurityConstants;
 import com.giantnodes.forum.services.security.Unsecured;
 import com.giantnodes.forum.utility.resources.FileUpload;
-import com.giantnodes.forum.utility.resources.ResourceLocation;
+import com.giantnodes.forum.utility.resources.ResourceDirectory;
 import graphql.GraphQLException;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.servlet.GraphQLContext;
@@ -22,7 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.time.Instant;
 import java.util.Date;
 
@@ -45,7 +44,7 @@ public class UserMutation implements GraphQLMutationResolver {
         GraphQLContext context = environment.getContext();
 
         if (!input.getAvatar().isEmpty()) {
-            FileUpload avatar = new FileUpload(environment.getContext(), ResourceLocation.STORAGE_AVATAR, id);
+            FileUpload avatar = new FileUpload(environment.getContext(), ResourceDirectory.STORAGE_AVATAR, id);
             input.setAvatar("http://localhost:8080/" + avatar.getLocation().getDirectory() + avatar.getFile().getName());
         }
 

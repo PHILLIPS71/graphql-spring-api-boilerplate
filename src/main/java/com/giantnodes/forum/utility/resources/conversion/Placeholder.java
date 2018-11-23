@@ -1,4 +1,4 @@
-package com.giantnodes.forum.utility.resources.conversion.image;
+package com.giantnodes.forum.utility.resources.conversion;
 
 public class Placeholder {
 }

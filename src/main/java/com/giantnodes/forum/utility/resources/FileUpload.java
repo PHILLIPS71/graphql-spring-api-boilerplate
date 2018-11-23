@@ -1,8 +1,11 @@
 package com.giantnodes.forum.utility.resources;
 
+import com.giantnodes.forum.utility.resources.conversion.image.ImageReformat;
+import com.giantnodes.forum.utility.resources.conversion.image.ImageType;
 import graphql.servlet.GraphQLContext;
 import org.apache.commons.io.FileUtils;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
@@ -14,9 +17,10 @@ public class FileUpload {
 
     private final File file;
     private final GraphQLContext context;
-    private ResourceLocation location;
+    private ResourceDirectory location;
     private String name;
-    public FileUpload(GraphQLContext context, ResourceLocation location, String name) {
+
+    public FileUpload(GraphQLContext context, ResourceDirectory location, String name) {
         this.context = context;
         this.location = location;
         this.name = name;
@@ -27,11 +31,11 @@ public class FileUpload {
         return file;
     }
 
-    public ResourceLocation getLocation() {
+    public ResourceDirectory getLocation() {
         return location;
     }
 
-    public void setLocation(ResourceLocation location) {
+    public void setLocation(ResourceDirectory location) {
         this.location = location;
     }
 
@@ -53,9 +57,7 @@ public class FileUpload {
 
             for (Part part : parts) {
                 try {
-                    File file = new File(getLocation().getDirectory() + name + "." + part.getContentType().split("/")[1]);
-                    FileUtils.copyInputStreamToFile(part.getInputStream(), file);
-                    return file;
+                    return ImageReformat.convert(part.getInputStream(), ImageType.PNG, ResourceDirectory.STORAGE_AVATAR, name);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

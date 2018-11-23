@@ -1,13 +1,13 @@
 package com.giantnodes.forum.utility.resources;
 
-public enum ResourceLocation {
+public enum ResourceDirectory {
 
     STORAGE("storage/"),
     STORAGE_AVATAR("storage/avatar/");
 
     private String directory;
 
-    ResourceLocation(String directory) {
+    ResourceDirectory(String directory) {
         this.directory = directory;
     }
 
