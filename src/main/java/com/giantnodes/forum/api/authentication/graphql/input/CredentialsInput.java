@@ -1,4 +1,4 @@
-package com.giantnodes.forum.api.user.graphql.input;
+package com.giantnodes.fish.api.authentication.graphql.input;
 
 public class CredentialsInput {
 
@@ -8,9 +8,6 @@ public class CredentialsInput {
     public CredentialsInput(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public CredentialsInput() {
     }
 
     public String getEmail() {
