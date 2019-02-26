@@ -1,7 +1,7 @@
 package com.giantnodes.forum.api.user.graphql.input;
 
 import org.joda.time.DateTime;
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class UserInput {
 
@@ -16,11 +16,6 @@ public class UserInput {
         this.avatar = avatar;
         this.seen = DateTime.parse(seen);
     }
-
-    public UserInput() {
-
-    }
-
 
     public String getEmail() {
         return email;

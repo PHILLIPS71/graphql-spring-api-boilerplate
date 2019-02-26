@@ -1,17 +1,14 @@
 package com.giantnodes.forum.api.user;
 
-import com.giantnodes.forum.api.user.graphql.input.UserInput;
-import com.giantnodes.forum.utility.Mergeable;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.lang.reflect.Field;
 
 @Document(collection = "users")
-public class User implements Mergeable<User, UserInput> {
+public class User {
 
     @Id
     private String id;
@@ -80,29 +77,6 @@ public class User implements Mergeable<User, UserInput> {
 
     public DateTime getModifiedAt() {
         return modifiedAt;
-    }
-
-    @Override
-    public User merge(UserInput target) {
-        try {
-            for (Field field : target.getClass().getDeclaredFields()) {
-                Field f = getClass().getDeclaredField(field.getName());
-                field.setAccessible(true);
-
-
-                if (field.get(target) != null) {
-                    if (f.get(this) != field.get(target)) {
-                        f.set(this, field.get(target));
-                    }
-                }
-
-                field.setAccessible(false);
-            }
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return this;
     }
 
 }

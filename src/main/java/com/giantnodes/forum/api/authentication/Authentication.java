@@ -1,13 +1,11 @@
-package com.giantnodes.fish.api.authentication;
+package com.giantnodes.forum.api.authentication;
 
-import com.giantnodes.fish.api.authentication.component.connection.AuthConnection;
-import com.giantnodes.fish.api.user.User;
+import com.giantnodes.forum.api.user.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Document(collection = "authentication")
 public class Authentication {
@@ -16,15 +14,12 @@ public class Authentication {
     private String id;
     @DBRef
     private final User user;
-    @DBRef
-    private List<AuthConnection> connections;
 
     private String token;
 
     public Authentication(User user, String token) {
         this.user = user;
         this.token = token;
-        this.connections = new ArrayList<>();
     }
 
     public String getId() {
@@ -37,9 +32,5 @@ public class Authentication {
 
     public String getToken() {
         return token;
-    }
-
-    public List<AuthConnection> getConnections() {
-        return connections;
     }
 }

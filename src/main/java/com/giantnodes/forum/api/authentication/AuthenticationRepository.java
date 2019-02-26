@@ -1,4 +1,4 @@
-package com.giantnodes.fish.api.authentication;
+package com.giantnodes.forum.api.authentication;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

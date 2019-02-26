@@ -1,8 +1,7 @@
-package com.giantnodes.fish.api.authentication;
+package com.giantnodes.forum.api.authentication;
 
-import com.giantnodes.fish.api.API;
-import com.giantnodes.fish.api.authentication.graphql.input.AuthenticationInput;
-import com.giantnodes.fish.services.graphql.exceptions.IdNotFoundException;
+import com.giantnodes.forum.api.API;
+import com.giantnodes.forum.api.authentication.graphql.input.AuthenticationInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,10 +36,6 @@ public class AuthenticationDao implements API<Authentication, AuthenticationInpu
     @Override
     public List<Authentication> all() {
         return null;
-    }
-
-    public Authentication save(Authentication auth) {
-        return repository.save(auth);
     }
 
     public Authentication getByUserId(String id) {

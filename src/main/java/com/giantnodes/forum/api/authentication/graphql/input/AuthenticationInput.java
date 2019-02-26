@@ -1,4 +1,4 @@
-package com.giantnodes.fish.api.authentication.graphql.input;
+package com.giantnodes.forum.api.authentication.graphql.input;
 
 public class AuthenticationInput {
 }
